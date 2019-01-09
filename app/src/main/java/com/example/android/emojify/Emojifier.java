@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.face.Face;
 import com.google.android.gms.vision.face.FaceDetector;
+import com.google.android.gms.vision.face.Landmark;
 
 class Emojifier {
 
@@ -51,7 +52,7 @@ class Emojifier {
         SparseArray<Face> faces = detector.detect(frame);
 
         // Log the number of faces
-        Log.d(LOG_TAG, "detectFaces: number of faces = " + faces.size());
+        Log.d(LOG_TAG, "~~ detectFaces: number of faces = " + faces.size());
 
         // If there are no faces detected, show a Toast message
         if(faces.size() == 0){
@@ -59,10 +60,29 @@ class Emojifier {
         }
 
         // TODO (2): Iterate through the faces, calling getClassifications() for each face.
+        for (int i = 0; i < faces.size(); i++) {
+
+            Face face = faces.valueAt(i);
+            getClassifications(face);
+
+        }
 
         // Release the detector
         detector.release();
     }
 
     // TODO (1): Create a static method called getClassifications() which logs the probability of each eye being open and that the person is smiling.
+    public static void getClassifications(Face face) {
+
+        float left = face.getIsLeftEyeOpenProbability();
+        float right = face.getIsRightEyeOpenProbability();
+        float smile = face.getIsSmilingProbability();
+
+        // Log the number of faces
+        Log.d(LOG_TAG, "~~getClassifications, left = " + left);
+        Log.d(LOG_TAG, "~~getClassifications, right = " + right);
+        Log.d(LOG_TAG, "~~getClassifications, smile = " + smile);
+
+    }
+
 }
