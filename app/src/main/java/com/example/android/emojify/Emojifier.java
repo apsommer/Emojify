@@ -108,6 +108,7 @@ class Emojifier {
                 }
 
                 // TODO (8): Call addBitmapToFace(), passing in the resultBitmap, the emojiBitmap and the Face  object, and assigning the result to resultBitmap
+                Log.d(LOG_TAG, "~~emojiBitmap " + emojiBitmap);
                 resultBitmap = addBitmapToFace(resultBitmap, emojiBitmap, face);
 
             }
@@ -133,10 +134,10 @@ class Emojifier {
     private static Emoji whichEmoji(Face face) {
 
         // Log all the probabilities
-        Log.d(LOG_TAG, "whichEmoji: smilingProb = " + face.getIsSmilingProbability());
-        Log.d(LOG_TAG, "whichEmoji: leftEyeOpenProb = "
+        Log.d(LOG_TAG, "~~whichEmoji: smilingProb = " + face.getIsSmilingProbability());
+        Log.d(LOG_TAG, "~~whichEmoji: leftEyeOpenProb = "
                 + face.getIsLeftEyeOpenProbability());
-        Log.d(LOG_TAG, "whichEmoji: rightEyeOpenProb = "
+        Log.d(LOG_TAG, "~~whichEmoji: rightEyeOpenProb = "
                 + face.getIsRightEyeOpenProbability());
 
         boolean smiling = face.getIsSmilingProbability() > SMILING_PROB_THRESHOLD;
@@ -169,7 +170,7 @@ class Emojifier {
 
 
         // Log the chosen Emoji
-        Log.d(LOG_TAG, "whichEmoji: " + emoji.name());
+        Log.d(LOG_TAG, "~~whichEmoji: " + emoji.name());
 
         // TODO (2): Have the method return the selected Emoji type.
         return emoji;
