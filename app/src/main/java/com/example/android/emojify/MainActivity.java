@@ -39,35 +39,35 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-    // TODO (2): Replace all View declarations with Butterknife annotations
+public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_STORAGE_PERMISSION = 1;
-
     private static final String FILE_PROVIDER_AUTHORITY = "com.example.android.fileprovider";
 
-    private ImageView mImageView;
-
-    private Button mEmojifyButton;
-    private FloatingActionButton mShareFab;
-    private FloatingActionButton mSaveFab;
-    private FloatingActionButton mClearFab;
-
-    private TextView mTitleTextView;
-
-    private String mTempPhotoPath;
-
-    private Bitmap mResultsBitmap;
-
+    // TODO (2): Replace all View declarations with Butterknife annotations
+    // TODO (3): Replace the findViewById calls with the Butterknife data binding
+    @BindView(R.id.image_view) ImageView mImageView;
+    @BindView(R.id.image_view) Button mEmojifyButton;
+    @BindView(R.id.image_view) FloatingActionButton mShareFab;
+    @BindView(R.id.image_view) FloatingActionButton mSaveFab;
+    @BindView(R.id.image_view) FloatingActionButton mClearFab;
+    @BindView(R.id.image_view) TextView mTitleTextView;
+    @BindView(R.id.image_view) String mTempPhotoPath;
+    @BindView(R.id.image_view) Bitmap mResultsBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // TODO (3): Replace the findViewById calls with the Butterknife data binding
+        // TODO (1b) Critical statement that initializes Butterknife
+        ButterKnife.bind(this);
+
         // Bind the views
         mImageView = (ImageView) findViewById(R.id.image_view);
         mEmojifyButton = (Button) findViewById(R.id.emojify_button);
@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param view The emojify me button.
      */
+    @OnClick(R.id.emojify_button)
     public void emojifyMe(View view) {
         // Check for the external storage permission
         if (ContextCompat.checkSelfPermission(this,
@@ -199,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param view The save button.
      */
+    @OnClick(R.id.save_button)
     public void saveMe(View view) {
         // Delete the temporary image file
         BitmapUtils.deleteImageFile(this, mTempPhotoPath);
@@ -212,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param view The share button.
      */
+    @OnClick(R.id.share_button)
     public void shareMe(View view) {
         // Delete the temporary image file
         BitmapUtils.deleteImageFile(this, mTempPhotoPath);
@@ -228,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param view The clear button.
      */
+    @OnClick(R.id.clear_button)
     public void clearImage(View view) {
         // Clear the image and toggle the view visibility
         mImageView.setImageResource(0);
