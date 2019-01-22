@@ -30,6 +30,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -49,16 +50,17 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_STORAGE_PERMISSION = 1;
     private static final String FILE_PROVIDER_AUTHORITY = "com.example.android.fileprovider";
 
+    private String mTempPhotoPath;
+    private Bitmap mResultsBitmap;
+
     // TODO (2): Replace all View declarations with Butterknife annotations
     // TODO (3): Replace the findViewById calls with the Butterknife data binding
     @BindView(R.id.image_view) ImageView mImageView;
-    @BindView(R.id.image_view) Button mEmojifyButton;
-    @BindView(R.id.image_view) FloatingActionButton mShareFab;
-    @BindView(R.id.image_view) FloatingActionButton mSaveFab;
-    @BindView(R.id.image_view) FloatingActionButton mClearFab;
-    @BindView(R.id.image_view) TextView mTitleTextView;
-    @BindView(R.id.image_view) String mTempPhotoPath;
-    @BindView(R.id.image_view) Bitmap mResultsBitmap;
+    @BindView(R.id.emojify_button) Button mEmojifyButton;
+    @BindView(R.id.share_button) FloatingActionButton mShareFab;
+    @BindView(R.id.save_button) FloatingActionButton mSaveFab;
+    @BindView(R.id.clear_button) FloatingActionButton mClearFab;
+    @BindView(R.id.title_text_view) TextView mTitleTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,22 +70,14 @@ public class MainActivity extends AppCompatActivity {
         // TODO (1b) Critical statement that initializes Butterknife
         ButterKnife.bind(this);
 
-        // Bind the views
-        mImageView = (ImageView) findViewById(R.id.image_view);
-        mEmojifyButton = (Button) findViewById(R.id.emojify_button);
-        mShareFab = (FloatingActionButton) findViewById(R.id.share_button);
-        mSaveFab = (FloatingActionButton) findViewById(R.id.save_button);
-        mClearFab = (FloatingActionButton) findViewById(R.id.clear_button);
-        mTitleTextView = (TextView) findViewById(R.id.title_text_view);
     }
 
     /**
      * OnClick method for "Emojify Me!" Button. Launches the camera app.
-     *
-     * @param view The emojify me button.
      */
     @OnClick(R.id.emojify_button)
-    public void emojifyMe(View view) {
+    public void emojifyMe() {
+        Log.e("~~", "emojifyMe");
         // Check for the external storage permission
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -175,6 +169,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private void processAndSetImage() {
 
+        Log.d("~~", "processAndSetResult");
+
         // Toggle Visibility of the views
         mEmojifyButton.setVisibility(View.GONE);
         mTitleTextView.setVisibility(View.GONE);
@@ -197,11 +193,9 @@ public class MainActivity extends AppCompatActivity {
     // TODO (4): Replace OnClick methods with Butterknife annotations for OnClicks
     /**
      * OnClick method for the save button.
-     *
-     * @param view The save button.
      */
     @OnClick(R.id.save_button)
-    public void saveMe(View view) {
+    public void saveMe() {
         // Delete the temporary image file
         BitmapUtils.deleteImageFile(this, mTempPhotoPath);
 
@@ -211,11 +205,9 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * OnClick method for the share button, saves and shares the new bitmap.
-     *
-     * @param view The share button.
      */
     @OnClick(R.id.share_button)
-    public void shareMe(View view) {
+    public void shareMe() {
         // Delete the temporary image file
         BitmapUtils.deleteImageFile(this, mTempPhotoPath);
 
@@ -228,11 +220,9 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * OnClick for the clear button, resets the app to original state.
-     *
-     * @param view The clear button.
      */
     @OnClick(R.id.clear_button)
-    public void clearImage(View view) {
+    public void clearImage() {
         // Clear the image and toggle the view visibility
         mImageView.setImageResource(0);
         mEmojifyButton.setVisibility(View.VISIBLE);

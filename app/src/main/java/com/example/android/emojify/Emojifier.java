@@ -58,7 +58,7 @@ class Emojifier {
         SparseArray<Face> faces = detector.detect(frame);
 
         // Log the number of faces
-        Log.d(LOG_TAG, "detectFaces: number of faces = " + faces.size());
+        Log.d("~~", "detectFaces: number of faces = " + faces.size());
 
         // Initialize result bitmap to original picture
         Bitmap resultBitmap = picture;
