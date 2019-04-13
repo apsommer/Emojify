@@ -20,7 +20,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
 
@@ -32,8 +31,6 @@ import timber.log.Timber;
 
 class Emojifier {
 
-    // TODO (3): Change all Log statements to Timber logs and remove the LOG_TAG variable
-    private static final String LOG_TAG = Emojifier.class.getSimpleName();
 
     private static final float EMOJI_SCALE_FACTOR = .9f;
     private static final double SMILING_PROB_THRESHOLD = .15;
@@ -61,7 +58,7 @@ class Emojifier {
         SparseArray<Face> faces = detector.detect(frame);
 
         // Log the number of faces
-        Timber.d("~~detectFaces: number of faces = " + faces.size());
+        Timber.d("detectFaces: number of faces = " + faces.size());
 
         // Initialize result bitmap to original picture
         Bitmap resultBitmap = picture;
@@ -138,9 +135,10 @@ class Emojifier {
         // Log all the probabilities
         Timber.d("whichEmoji: smilingProb = " + face.getIsSmilingProbability());
         Timber.d("whichEmoji: leftEyeOpenProb = "
-                        + face.getIsLeftEyeOpenProbability());
+                + face.getIsLeftEyeOpenProbability());
         Timber.d("whichEmoji: rightEyeOpenProb = "
-                        + face.getIsRightEyeOpenProbability());
+                + face.getIsRightEyeOpenProbability());
+
 
         boolean smiling = face.getIsSmilingProbability() > SMILING_PROB_THRESHOLD;
 
@@ -176,6 +174,7 @@ class Emojifier {
         // Log the chosen Emoji
         Timber.d("whichEmoji: " + emoji.name());
 
+        // return the chosen Emoji
         return emoji;
     }
 
@@ -218,7 +217,7 @@ class Emojifier {
 
         return resultBitmap;
     }
-    
+
 
     // Enum for all possible Emojis
     private enum Emoji {
